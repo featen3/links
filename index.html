@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>featen</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css">
+
+</head>
+<body>
+    <div id="snow-container"></div>
+    <div class="bio-container">
+        <div class="profile-card">
+            <img src="ava.jpg" alt="Аватар" class="avatar">
+            <div class="profile-info">
+                <h2>featen</h2>
+                <p class="subtitle">
+                    <span id="typing-text"></span>
+                    <span class="cursor">|</span>
+                </p>
+
+            </div>
+            <div class="links-section">
+                <a href="https://github.com/featen3" target="_blank" class="social-icon">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://steamcommunity.com/id/sojral3" target="_blank" class="social-icon">
+                    <i class="fab fa-steam"></i>
+                </a>
+                <a href="https://leetcode.com/u/featen3/" target="_blank" class="social-icon">
+                    <i class="fab fa-leetcode"></i>
+                </a>
+                <a href="mailto:featenoffers@gmail.com" class="social-icon">
+                    <i class="fa-solid fa-square-envelope"></i>
+                </a>
+                <a href="https://www.roblox.com/users/12507395/profile" target="_blank" class="social-icon">
+                    <i class="fa-brands fa-roblox-creator-studio"></i>
+                </a>
+                <a href="https://discord.gg/HMuTxhkCSZ" target="_blank" class="social-icon">
+                    <i class="fab fa-discord"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="site-footer">
+        featen.exe
+    </footer>
+
+    <script>
+            const snowContainer = document.getElementById('snow-container');
+            function createSnowflake(){
+                const flake = document.createElement('div');
+                flake.classList.add('snowflake');
+
+                const size = Math.random()*25+5;
+                flake.style.width=`${size}px`;
+                flake.style.height=`${size}px`;
+
+                flake.style.left=`${Math.random()*100}%`;
+
+                flake.style.opacity=Math.random()*0.6+0.3;
+
+                const fallDuration = Math.random()*4+6;
+                flake.style.animationDuration=`${fallDuration}s,${Math.random()*2+2}s`;
+
+                snowContainer.appendChild(flake);
+
+                setTimeout(() => {
+                    flake.remove();
+                }, fallDuration*1000);
+
+
+            }
+
+            setInterval(createSnowflake,250)
+
+
+            const typingText = document.getElementById(`typing-text`)
+            const phrases=[
+                "Student ITMO SE",
+                "[Warning] Target process terminated unexpectedly.",
+                "bypass_vac.dll -> cs2.exe (PID: 4312)",
+                "Status: Memory allocated at 0x7FFA4B20",
+                "Please run Process Hacker as Administrator.",
+                "Status: Connection lost.",
+                `[ProcessHacker] Error: Cannot open file "onetap.dll"`,
+            ];
+
+
+            let phraseIndex=0;
+            let characterIndex=0;
+            let isDeleting = false;
+
+            function type(){
+                const currentPhrase=phrases[phraseIndex]
+                if (isDeleting){
+                    typingText.textContent=currentPhrase.substring(0,characterIndex-1);
+                    characterIndex--;
+                }else{
+                    typingText.textContent=currentPhrase.substring(0,characterIndex+1);
+                    characterIndex++;
+                }
+
+                let typingSpeed=250;
+                if (isDeleting){
+                    typingSpeed/=2;
+                }
+
+                if (!isDeleting && characterIndex==currentPhrase.length){
+                    typingSpeed=2000;
+                    isDeleting=true;
+                }
+                else if (isDeleting && characterIndex==0){
+                    isDeleting=false;
+                    phraseIndex=(phraseIndex+1)%phrases.length;
+                    typingSpeed=500;
+                }
+                setTimeout(type,typingSpeed);
+            }
+            setTimeout(()=>{
+                type();
+            },466)
+    </script>
+</body>
+</html>
